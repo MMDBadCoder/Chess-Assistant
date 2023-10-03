@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Chess Assistant",
   "version": "1.0",
   "description": "Assists in making better chess decisions.",
@@ -8,17 +8,35 @@
     "48": "icon.png",
     "128": "icon.png"
   },
-  "browser_action": {
+  "action": {
+    "default_title": "Chess Assistant",
+    "default_popup": "popup.html",
     "default_icon": {
       "16": "icon.png",
       "48": "icon.png",
       "128": "icon.png"
-    },
-    "default_title": "Chess Assistant",
-    "default_popup": "popup.html"
+    }
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/libs/sweetalert2.js"
+      ]
+    }
+  ],
   "permissions": [
     "activeTab",
-    "https://chess-ai.ir/"
+    "tabs"
   ]
 }
