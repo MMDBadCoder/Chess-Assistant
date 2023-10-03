@@ -1,7 +1,16 @@
 $(document).ready(function () {
 
+    $('#findBestMoveButtonWhite').on('click', async function () {
+        await findBestMove('white')
+    });
+
+    $('#findBestMoveButtonBlack').on('click', async function () {
+        await findBestMove('black')
+    });
+
     let interpreters = allInterpreters();
-    $('#findBestMoveButton').on('click', async function () {
+
+    async function findBestMove(turn) {
         let currentTab = await getCurrentTab();
 
         // Try to match interpreter
@@ -18,7 +27,7 @@ $(document).ready(function () {
         }
 
         if (!matchedInterpreter.isInMatchFunc(currentTab)) {
-            showAlert(currentTab.id, 'error', 'Incorrect Page', "You're not in a match now!")
+            showAlert('error', 'Incorrect Page', "You're not in a match now!")
             return;
         }
 
@@ -36,8 +45,32 @@ $(document).ready(function () {
             return;
         }
 
-        console.log(gameState);
-    });
+        const requestBody = {
+            cells: gameState,
+            turn: turn
+        }
+        console.log(requestBody);
+        $.ajax({
+            url: "http://localhost:8000/best_move",
+            type: "POST",
+            data: JSON.stringify(requestBody),
+            contentType: "application/json",
+            success: function (response) {
+                const bestMove = response['best_move']
+                if (bestMove === null) {
+                    showAlert('error', 'No result!', "Ai can't help you!");
+                    return;
+                }
+                const fromCell = bestMove.substring(0, 2);
+                const toCell = bestMove.substring(2, 4);
+                const resultMessage = 'From ' + fromCell + ' To ' + toCell;
+                showAlert('success', resultMessage);
+            },
+            error: function (xhr, status, error) {
+                unknownError("requesting to backend api, " + xhr);
+            }
+        });
+    }
 });
 
 
@@ -71,5 +104,5 @@ function sendMessageToContent(action, args) {
 }
 
 function unknownError(when) {
-    showAlert('error', 'Oops...', "Unknown error occurred when " + when)
+    showAlert('error', 'Oops...', "Unknown error occurred when " + when + ".")
 }

@@ -3,12 +3,28 @@
 <head>
     <title>Chess Assistant</title>
     <script src="js/libs/jquery_3.6.3_jquery.min.js"></script>
-    <script src="js/libs/sweetalert2.js"></script>
+    <link rel="stylesheet" href="css/semantic.min.css">
+    <script src="js/libs/semantic.min.js"></script>
     <script src="js/websites-interpreters/lichess.js"></script>
     <script src="js/websites-interpreters/interpreters.js"></script>
     <script src="js/popup.js"></script>
 </head>
 <body>
-<button id="findBestMoveButton">Find Best Move</button>
+<div class="ui container middle aligned center aligned" style="padding: 30px">
+    <h2 class="ui icon header">
+        <div class="content">
+            Chess Assistant
+            <div class="sub header">It provides a comprehensive solution for enhancing chess gameplay and
+                decision-making.
+            </div>
+        </div>
+    </h2>
+    <div class="ui buttons">
+        <button class="ui white button" id="findBestMoveButtonWhite">White</button>
+        <div class="or"></div>
+        <button class="ui black button" id="findBestMoveButtonBlack">Black</button>
+    </div>
+</div>
+
 </body>
 </html>

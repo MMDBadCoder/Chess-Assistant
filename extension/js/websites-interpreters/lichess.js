@@ -12,15 +12,15 @@ const get_lichess_interpreter = function () {
 
         let result = [];
 
-        const squares = board.children[0].children[0].children;
+        const cells = board.children[0].children[0].children;
         const chessElements = ['pawn', 'queen', 'king', 'bishop', 'knight', 'rook'];
         const regex = /-?\d+\.?\d*/g; // Regular expression to match numerical x and y values
-        for (const square of squares) {
-            const XYValues = square.style.transform.match(regex);
+        for (const cell of cells) {
+            const XYValues = cell.style.transform.match(regex);
             const x = parseInt(XYValues[0]) / cellLength;
             const y = parseInt(XYValues[1]) / cellLength;
 
-            const classList = square.classList;
+            const classList = cell.classList;
             let color = null;
             if (classList.contains('black')) {
                 color = 'black';
